@@ -215,6 +215,7 @@ export class TypeReplacement {
       type.module,
       type.name,
       params,
+      type.constructors,
       this.replaceAlias(type.alias),
     );
   }

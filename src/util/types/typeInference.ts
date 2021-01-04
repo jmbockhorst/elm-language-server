@@ -98,6 +98,7 @@ export interface TUnion {
   module: string;
   name: string;
   params: Type[];
+  constructors: string[];
   alias?: Alias;
 }
 export interface TRecord {
@@ -131,9 +132,10 @@ export const TUnion = (
   module: string,
   name: string,
   params: Type[],
+  constructors: string[],
   alias?: Alias,
 ): TUnion => {
-  return { nodeType: "Union", module, name, params, alias };
+  return { nodeType: "Union", module, name, params, constructors, alias };
 };
 
 export const TVar = (name: string, rigid = false): TVar => {
@@ -197,16 +199,16 @@ export const TUnknown: TUnknown = {
   nodeType: "Unknown",
 };
 
-const TInt = (): TUnion => TUnion("Basics", "Int", []);
-const TFloat = (): TUnion => TUnion("Basics", "Float", []);
-const TBool = (): TUnion => TUnion("Basics", "Bool", []);
-const TString = (): TUnion => TUnion("String", "String", []);
-const TChar = (): TUnion => TUnion("Char", "Char", []);
+const TInt = (): TUnion => TUnion("Basics", "Int", [], ["Int"]);
+const TFloat = (): TUnion => TUnion("Basics", "Float", [], ["Float"]);
+const TBool = (): TUnion => TUnion("Basics", "Bool", [], ["True", "False"]);
+const TString = (): TUnion => TUnion("String", "String", [], ["String"]);
+const TChar = (): TUnion => TUnion("Char", "Char", [], ["Char"]);
 const TShader = (): TUnion =>
-  TUnion("WebGL", "Shader", [TUnknown, TUnknown, TUnknown]);
+  TUnion("WebGL", "Shader", [TUnknown, TUnknown, TUnknown], []);
 
 export const TList = (elementType: Type): TUnion =>
-  TUnion("List", "List", [elementType]);
+  TUnion("List", "List", [elementType], ["List"]);
 
 const TNumber = (): TVar => TVar("number");
 

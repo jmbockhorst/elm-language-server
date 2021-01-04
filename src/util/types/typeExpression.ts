@@ -493,6 +493,12 @@ export class TypeExpression {
         ?.moduleName ?? "",
       typeDeclaration.name,
       params,
+      TreeUtils.findAllNamedChildrenOfType(
+        "union_variant",
+        typeDeclaration,
+      )?.map(
+        (unionVariant) => unionVariant.childForFieldName("name")?.text ?? "",
+      ) ?? [],
     );
   }
 

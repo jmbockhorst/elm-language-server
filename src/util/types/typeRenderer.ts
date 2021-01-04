@@ -19,7 +19,7 @@ export class TypeRenderer {
   public render(t: Type): string {
     if (t.alias) {
       return this.renderUnion(
-        TUnion(t.alias.module, t.alias.name, t.alias.parameters),
+        TUnion(t.alias.module, t.alias.name, t.alias.parameters, []),
       );
     }
 
