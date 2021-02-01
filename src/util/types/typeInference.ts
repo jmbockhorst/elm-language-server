@@ -1555,7 +1555,10 @@ export class InferenceScope {
     if (baseType.nodeType === "Var") {
       const extRecord = TRecord(mappedFields, TVar(baseType.name));
       if (this.isAssignable(recordIdentifier, baseType, extRecord)) {
-        return extRecord;
+        return {
+          ...extRecord,
+          baseType,
+        };
       } else {
         return TUnknown;
       }

@@ -42,12 +42,16 @@ export class TypeRenderer {
       case "Union":
         return this.renderUnion(t);
       case "Record":
-      case "MutableRecord":
-        return `{ ${
-          t.baseType ? `${this.render(t.baseType)} | ` : ""
-        }${Object.entries(t.fields)
-          .map(([field, type]) => `${field} : ${this.render(type)}`)
-          .join(", ")} }`;
+      case "MutableRecord": {
+        const entries = Object.entries(t.fields);
+        return entries.length === 0
+          ? `{}`
+          : `{ ${
+              t.baseType ? `${this.render(t.baseType)} | ` : ""
+            }${entries
+              .map(([field, type]) => `${field} : ${this.render(type)}`)
+              .join(", ")} }`;
+      }
     }
   }
 
